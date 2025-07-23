@@ -1,0 +1,170 @@
+# Example Usage
+
+This document shows how to use the Todo MCP server tools.
+
+## Tool Examples
+
+### 1. Create a Todo
+
+```json
+{
+  "name": "create-todo",
+  "arguments": {
+    "name": "Build MCP Server",
+    "priority": "High"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Created to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"Pending\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:30:00.000Z\"\n}"
+    }
+  ]
+}
+```
+
+### 2. Get All Todos
+
+```json
+{
+  "name": "get-todos",
+  "arguments": {}
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "[\n  {\n    \"id\": 1,\n    \"name\": \"Build MCP Server\",\n    \"priority\": \"High\",\n    \"status\": \"Pending\",\n    \"created_at\": \"2024-01-15T10:30:00.000Z\",\n    \"updated_at\": \"2024-01-15T10:30:00.000Z\"\n  }\n]"
+    }
+  ]
+}
+```
+
+### 3. Get Todos by Status
+
+```json
+{
+  "name": "get-todos",
+  "arguments": {
+    "status": "Pending"
+  }
+}
+```
+
+### 4. Get Todos by Priority
+
+```json
+{
+  "name": "get-todos",
+  "arguments": {
+    "priority": "High"
+  }
+}
+```
+
+### 5. Get Todos by Status and Priority
+
+```json
+{
+  "name": "get-todos",
+  "arguments": {
+    "status": "Pending",
+    "priority": "High"
+  }
+}
+```
+
+### 6. Update a Todo
+
+```json
+{
+  "name": "update-todo",
+  "arguments": {
+    "id": 1,
+    "status": "In progress"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Updated to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"In progress\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:35:00.000Z\"\n}"
+    }
+  ]
+}
+```
+
+### 7. Append Notes to Todo
+
+```json
+{
+  "name": "append-todo-notes",
+  "arguments": {
+    "id": 1,
+    "notes": "Started implementing the MCP server with PostgreSQL backend. Need to add authentication next."
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Appended notes to to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"In progress\",\n  \"notes\": \"Started implementing the MCP server with PostgreSQL backend. Need to add authentication next.\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n}"
+    }
+  ]
+}
+```
+
+### 8. Mark Todo as Done
+
+```json
+{
+  "name": "mark-todo-done",
+  "arguments": {
+    "id": 1
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Marked to-do as done: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"Done\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n}"
+    }
+  ]
+}
+```
+
+## Status Values
+
+- `Pending`: Todo is waiting to be started
+- `Waiting on others`: Todo depends on someone else
+- `Stay aware`: Todo needs attention but no action required
+- `In progress`: Todo is currently being worked on
+- `Done`: Todo has been completed
+
+## Priority Values
+
+- `Low`: Low priority task
+- `Medium`: Medium priority task
+- `High`: High priority task
+- `Urgent`: Urgent task that needs immediate attention 

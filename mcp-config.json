@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "todo-mcp": {
+      "command": "todo-mcp",
+      "args": [],
+      "env": {
+        "DATABASE_URL": "file:./todo.db"
+      },
+      "description": "A todo management MCP server that provides tools for creating, reading, updating, and managing todo items with priorities and statuses."
+    }
+  }
+} 

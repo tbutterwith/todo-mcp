@@ -1,0 +1,66 @@
+# Todo Backup Report
+
+**Backup Version:** 1.0.0
+**Generated:** Jul 23, 2025, 09:46 AM
+**Total Todos:** 43
+
+| ID | Name | Priority | Status | Notes | Created | Updated |
+|----|------|----------|--------|-------|---------|---------|
+| 59 | Onboarding Prasana | 🟠 High | 🔄 IN PROGRESS |  I am meeting him for a coffee catch-up today. Thi... | Jul 9, 2025, 05:10 PM | Jul 11, 2025, 09:23 AM |
+| 60 | Cost Tracking Initiative | 🔴 Urgent | 🔄 IN PROGRESS | Followed up with Bogdan/Ivan to resolve BigQuery l... | Jul 9, 2025, 05:10 PM | Jul 22, 2025, 02:14 PM |
+| 61 | Expand interview pool beyond Sergio and Areeba | 🔴 Urgent | ⏳ WAITING ON OTHERS | Sergio has asked to do fewer interviews because he... | Jul 9, 2025, 05:10 PM | Jul 11, 2025, 10:50 AM |
+| 62 | Render Outage on 22nd | 🔴 Urgent | ✅ DONE | - | Jul 9, 2025, 05:10 PM | Jul 10, 2025, 08:47 AM |
+| 63 | James is getting more active on LI → do we have an issue here | 🔴 Urgent | 🔄 IN PROGRESS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 64 | DevOps Ways of Working | 🔴 Urgent | 👀 STAY AWARE | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 65 | Can we save money on Veo3 generations? | 🟠 High | ✅ DONE | - | Jul 9, 2025, 05:10 PM | Jul 10, 2025, 04:52 PM |
+| 66 | Sieve Youtube costs | 🟠 High | 👀 STAY AWARE | - | Jul 9, 2025, 05:10 PM | Jul 10, 2025, 10:27 AM |
+| 67 | Derisk Aleksei and our in-house AI work | 🟠 High | 👀 STAY AWARE | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 68 | GCP LDN Event Tickets | 🟠 High | ✅ DONE | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 69 | How do we make time for DevOps to do strategic work | 🟠 High | 🔄 IN PROGRESS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 70 | Hiring for Core Services from the hackathon | 🟠 High | ✅ DONE | - | Jul 9, 2025, 05:10 PM | Jul 10, 2025, 04:58 PM |
+| 72 | Security Training | 🟠 High | ⏳ WAITING ON OTHERS | - | Jul 9, 2025, 05:10 PM | Jul 11, 2025, 09:47 AM |
+| 71 | Server-side tracking work | 🟠 High | ⏳ WAITING ON OTHERS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 73 | Auto B-Roll (Generative AI) in Editor | 🟠 High | 👀 STAY AWARE | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 74 | Webflow — remove old workspace | 🟡 Medium | 🔄 IN PROGRESS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 75 | What did DevOps do? | 🟡 Medium | 🔄 IN PROGRESS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 76 | Elastic Search Cluster for V4T | 🟡 Medium | ⏳ WAITING ON OTHERS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 77 | The Alerts Channel is bad and I hate it | 🟡 Medium | 🔄 IN PROGRESS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 78 | Posthog limits | 🟡 Medium | 👀 STAY AWARE | 06/06/2025 | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 79 | Upskilling people on ComfyUI and other tools | 🟡 Medium | ⏳ WAITING ON OTHERS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 81 | AI Costs — data pipeline, model training costs | 🟢 Low | 👀 STAY AWARE | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 80 | Tailscale — Omnea & Cost management | 🟢 Low | 📋 PENDING | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 82 | Img → Video in Editor | 🟡 Medium | ⏳ WAITING ON OTHERS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 83 | Cloudflare Turnstile Issue | 🟡 Medium | ✅ DONE | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 84 | Tech Vision Work | 🟡 Medium | 👀 STAY AWARE | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 86 | Temporal — Mirko doing some onboarding/education after May 7th | 🟡 Medium | ⏳ WAITING ON OTHERS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 85 | Prompt-box on Homepage | 🟡 Medium | ✅ DONE | [COMPLETED] experiment concluded - lost | Jul 9, 2025, 05:10 PM | Jul 11, 2025, 01:31 PM |
+| 87 | Pexels Rate Limiting — when are we getting this for AI Studio | 🟡 Medium | ⏳ WAITING ON OTHERS | - | Jul 9, 2025, 05:10 PM | Jul 9, 2025, 05:10 PM |
+| 88 | Get a list of Replicate usage for Ben | 🟠 High | ✅ DONE | I've sent over the third party providers doc to Be... | Jul 10, 2025, 08:45 AM | Jul 22, 2025, 09:57 AM |
+| 89 | Engineering Concerns around speed and failure | 🔴 Urgent | 🔄 IN PROGRESS | Sjaak is deeply unhappy with the Seedance deploy —... | Jul 10, 2025, 08:45 AM | Jul 21, 2025, 03:20 PM |
+| 90 | Check up on the third party cost tracking library | 🔴 Urgent | ✅ DONE | Followed up with Bogdan/Ivan to resolve BigQuery l... | Jul 10, 2025, 10:00 AM | Jul 11, 2025, 09:35 AM |
+| 91 | Plan out Temporal Cloud migration | 🔴 Urgent | ⏳ WAITING ON OTHERS | We can't make the change until they enable the fea... | Jul 10, 2025, 10:48 AM | Jul 10, 2025, 11:01 AM |
+| 92 | Organize BAU retro for Acquisition | 🟡 Medium | ✅ DONE | [COMPLETED] Planned session for 23rd July with the... | Jul 10, 2025, 01:39 PM | Jul 11, 2025, 10:48 AM |
+| 93 | Use Deep Research to generate a report about introducing SLOs to an engineering org | 🟠 High | ✅ DONE | [COMPLETED] https://docs.google.com/document/d/1rT... | Jul 10, 2025, 03:17 PM | Jul 11, 2025, 09:22 AM |
+| 94 | Finish ooh doc | 🔴 Urgent | ✅ DONE | [COMPLETED] Finished the 'ooh doc' as per instruct... | Jul 11, 2025, 11:37 AM | Jul 21, 2025, 02:37 PM |
+| 95 | Prep promotion packet etc for Aleksei | 🟠 High | 🔄 IN PROGRESS | - | Jul 11, 2025, 01:46 PM | Jul 11, 2025, 01:46 PM |
+| 96 | Follow up on incident #440 when I'm back from holiday | 🔴 Urgent | 🔄 IN PROGRESS | https://www.notion.so/veed/OpEx-Report-22dcd243378... | Jul 11, 2025, 03:13 PM | Jul 11, 2025, 03:22 PM |
+| 97 | Revamp the OpEx process | 🟠 High | 🔄 IN PROGRESS | - | Jul 21, 2025, 02:34 PM | Jul 21, 2025, 02:34 PM |
+| 98 | Address feedback for Prasana | 🔴 Urgent | ✅ DONE | [COMPLETED] Address feedback for Prasana | Jul 21, 2025, 02:35 PM | Jul 22, 2025, 09:58 AM |
+| 99 | Review holiday requests | 🟠 High | 🔄 IN PROGRESS | Andrew still needs to raise his compassionate leav... | Jul 21, 2025, 02:36 PM | Jul 21, 2025, 02:37 PM |
+| 100 | Handle Sjaak's medical leave of absence. | 🔴 Urgent | 👀 STAY AWARE | - | Jul 21, 2025, 04:48 PM | Jul 22, 2025, 09:56 AM |
+| 101 | Track monetisation planning for Q3 (including staffing) | 🔴 Urgent | 👀 STAY AWARE | 25_07_23: [miro board](https://miro.com/app/board/... | Jul 23, 2025, 09:35 AM | Jul 23, 2025, 09:36 AM |
+
+## Summary
+
+### Priority Distribution
+- 🟠 High: 15
+- 🔴 Urgent: 13
+- 🟡 Medium: 13
+- 🟢 Low: 2
+
+### Status Distribution
+- 🔄 IN PROGRESS: 12
+- ⏳ WAITING ON OTHERS: 9
+- ✅ DONE: 12
+- 👀 STAY AWARE: 9
+- 📋 PENDING: 1

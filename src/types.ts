@@ -1,0 +1,57 @@
+import { z } from "zod";
+
+export enum TodoStatus {
+  PENDING = "Pending",
+  WAITING_ON_OTHERS = "Waiting on others",
+  STAY_AWARE = "Stay aware",
+  IN_PROGRESS = "In progress",
+  DONE = "Done"
+}
+
+export enum TodoPriority {
+  LOW = "Low",
+  MEDIUM = "Medium",
+  HIGH = "High",
+  URGENT = "Urgent"
+}
+
+export const TodoSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  priority: z.nativeEnum(TodoPriority),
+  status: z.nativeEnum(TodoStatus),
+  notes: z.string().nullable(),
+  created_at: z.date(),
+  updated_at: z.date()
+});
+
+export type Todo = z.infer<typeof TodoSchema>;
+
+export const CreateTodoSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  priority: z.nativeEnum(TodoPriority),
+  status: z.nativeEnum(TodoStatus).optional(),
+});
+
+export const UpdateTodoSchema = z.object({
+  id: z.number(),
+  name: z.string().optional(),
+  priority: z.nativeEnum(TodoPriority).optional(),
+  status: z.nativeEnum(TodoStatus).optional(),
+  notes: z.string().optional(),
+});
+
+export const GetTodosSchema = z.object({
+  status: z.nativeEnum(TodoStatus).optional().or(z.literal("").transform(() => undefined)),
+  priority: z.array(z.nativeEnum(TodoPriority)).optional()
+});
+
+export const MarkTodoDoneSchema = z.object({
+  id: z.number(),
+  notes: z.string().min(1, "Notes are required when marking a todo as done")
+});
+
+export const AppendTodoNotesSchema = z.object({
+  id: z.number(),
+  notes: z.string().min(1, "Notes cannot be empty")
+}); 
