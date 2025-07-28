@@ -167,4 +167,37 @@ This document shows how to use the Todo MCP server tools.
 - `Low`: Low priority task
 - `Medium`: Medium priority task
 - `High`: High priority task
-- `Urgent`: Urgent task that needs immediate attention 
+- `Urgent`: Urgent task that needs immediate attention
+
+### 9. Generate Todo Activity Report
+
+```json
+{
+  "name": "generate-todo-report",
+  "arguments": {
+    "days": 7
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Todo Activity Report (Last 7 days):\n\n{\n  \"timeframe\": \"7 days\",\n  \"totalTodos\": 3,\n  \"completedTodos\": 1,\n  \"updatedTodos\": 2,\n  \"todos\": [\n    {\n      \"id\": 1,\n      \"name\": \"Build MCP Server\",\n      \"priority\": \"High\",\n      \"status\": \"Done\",\n      \"notes\": \"Started implementing the MCP server with PostgreSQL backend. Need to add authentication next.\\n\\n[COMPLETED] Successfully completed the MCP server implementation\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Add Authentication\",\n      \"priority\": \"Medium\",\n      \"status\": \"In progress\",\n      \"notes\": \"Working on JWT authentication implementation\"\n    },\n    {\n      \"id\": 3,\n      \"name\": \"Write Documentation\",\n      \"priority\": \"Low\",\n      \"status\": \"Pending\",\n      \"notes\": null\n    }\n  ]\n}"
+    }
+  ]
+}
+```
+
+**Report with different timeframe:**
+```json
+{
+  "name": "generate-todo-report",
+  "arguments": {
+    "days": 30
+  }
+}
+``` 

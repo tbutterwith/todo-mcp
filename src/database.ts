@@ -38,7 +38,7 @@ export class DatabaseService {
       }
     });
 
-    return todos.map(todo => ({
+    const mappedTodos = todos.map(todo => ({
       id: todo.id,
       name: todo.name,
       priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
@@ -47,6 +47,33 @@ export class DatabaseService {
       created_at: todo.created_at,
       updated_at: todo.updated_at
     }));
+
+    // Sort by priority first (Urgent -> High -> Medium -> Low), then by status
+    return mappedTodos.sort((a, b) => {
+      // Priority sorting: Urgent first, then High, Medium, Low
+      const priorityOrder = {
+        [TodoPriority.URGENT]: 0,
+        [TodoPriority.HIGH]: 1,
+        [TodoPriority.MEDIUM]: 2,
+        [TodoPriority.LOW]: 3
+      };
+      
+      const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
+      if (priorityDiff !== 0) {
+        return priorityDiff;
+      }
+      
+      // Status sorting: In progress first, then Waiting on others, then Stay aware, then Pending
+      const statusOrder = {
+        [TodoStatus.IN_PROGRESS]: 0,
+        [TodoStatus.WAITING_ON_OTHERS]: 1,
+        [TodoStatus.STAY_AWARE]: 2,
+        [TodoStatus.PENDING]: 3,
+        [TodoStatus.DONE]: 4
+      };
+      
+      return statusOrder[a.status] - statusOrder[b.status];
+    });
   }
 
   async createTodo(data: { name: string; priority: TodoPriority; status?: TodoStatus }): Promise<Todo> {
@@ -210,6 +237,48 @@ export class DatabaseService {
       // Record not found or other error
       return null;
     }
+  }
+
+  async getTodosUpdatedInLastDays(days: number): Promise<Todo[]> {
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - days);
+
+    const todos = await this.prisma.todo.findMany({
+      where: {
+        OR: [
+          {
+            updated_at: {
+              gte: cutoffDate
+            }
+          },
+          {
+            AND: [
+              {
+                status: this.mapTodoStatusToPrismaStatus(TodoStatus.DONE)
+              },
+              {
+                updated_at: {
+                  gte: cutoffDate
+                }
+              }
+            ]
+          }
+        ]
+      },
+      orderBy: {
+        updated_at: 'desc'
+      }
+    });
+
+    return todos.map(todo => ({
+      id: todo.id,
+      name: todo.name,
+      priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
+      status: this.mapPrismaStatusToTodoStatus(todo.status),
+      notes: todo.notes,
+      created_at: todo.created_at,
+      updated_at: todo.updated_at
+    }));
   }
 
   async close(): Promise<void> {

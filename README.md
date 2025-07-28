@@ -9,6 +9,7 @@ A Model Context Protocol (MCP) server that manages a to-do list application with
 - **Mark Todo Done**: Mark a to-do as completed
 - **Update Todo**: Update any property of a to-do item
 - **Append Notes**: Add notes to existing to-do items
+- **Generate Reports**: Create activity reports for todos updated/completed in configurable timeframes
 
 ## Todo Properties
 
@@ -143,6 +144,25 @@ Add notes to an existing to-do item (append-only).
   "notes": "Started working on this task. Need to add authentication next."
 }
 ```
+
+#### generate-todo-report
+Generate a report of todos that have been updated or completed in the last N days.
+
+**Parameters:**
+- `days` (optional): Number of days to look back (default: 7, max: 365)
+
+**Example:**
+```json
+{
+  "days": 14
+}
+```
+
+**Response includes:**
+- Total number of todos updated/completed
+- Number of completed todos
+- Number of updated (but not completed) todos
+- List of all matching todos with their details
 
 ## Development
 

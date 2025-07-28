@@ -54,4 +54,8 @@ export const MarkTodoDoneSchema = z.object({
 export const AppendTodoNotesSchema = z.object({
   id: z.number(),
   notes: z.string().min(1, "Notes cannot be empty")
+});
+
+export const TodoReportSchema = z.object({
+  days: z.number().min(1).max(365).default(7).describe("Number of days to look back for updated/completed todos (default: 7)")
 }); 

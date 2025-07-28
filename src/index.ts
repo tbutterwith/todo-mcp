@@ -9,6 +9,7 @@ import {
   UpdateTodoSchema,
   MarkTodoDoneSchema,
   AppendTodoNotesSchema,
+  TodoReportSchema,
   TodoStatus
 } from "./types.js";
 
@@ -182,6 +183,35 @@ server.registerTool(
         {
           type: "text",
           text: `Appended notes to to-do: ${JSON.stringify(todo, null, 2)}`
+        }
+      ]
+    };
+  }
+);
+
+server.registerTool(
+  "generate-todo-report",
+  {
+    description: "Generate a report of todos that have been updated or completed in the last N days. The timeframe is configurable via the days parameter.",
+    inputSchema: TodoReportSchema.shape,
+  },
+  async (args) => {
+    const { days } = args;
+    const todos = await db.getTodosUpdatedInLastDays(days);
+    
+    const report = {
+      timeframe: `${days} days`,
+      totalTodos: todos.length,
+      completedTodos: todos.filter(todo => todo.status === TodoStatus.DONE).length,
+      updatedTodos: todos.filter(todo => todo.status !== TodoStatus.DONE).length,
+      todos: todos.map(({ created_at: _created_at, updated_at: _updated_at, ...rest }) => rest)
+    };
+    
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Todo Activity Report (Last ${days} days):\n\n${JSON.stringify(report, null, 2)}`
         }
       ]
     };
