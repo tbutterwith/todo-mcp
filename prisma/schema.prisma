@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Todo {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(255)
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
   priority    Priority
-  status      Status   @default(PENDING)
-  notes       String?  @db.Text
-  created_at  DateTime @default(now())
-  updated_at  DateTime @default(now()) @updatedAt
+  status      Status    @default(PENDING)
+  notes       String?   @db.Text
+  due_date    DateTime?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @default(now()) @updatedAt
 
   @@map("todos")
 }

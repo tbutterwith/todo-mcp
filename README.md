@@ -17,6 +17,7 @@ A Model Context Protocol (MCP) server that manages a to-do list application with
 - **Priority**: `Low`, `Medium`, `High`, `Urgent`
 - **Status**: `Pending`, `Waiting on others`, `Stay aware`, `In progress`, `Done`
 - **Notes**: String (optional) - Append-only field for additional details
+- **Due Date**: Date (optional) - When the todo should be completed
 
 ## Setup
 
@@ -76,6 +77,12 @@ Retrieve all to-dos with optional filtering.
 - `status` (optional): Filter by status
 - `priority` (optional): Filter by priority
 
+**Sorting Order:**
+Todos are sorted by:
+1. **Priority** (Urgent → High → Medium → Low)
+2. **Status** (In progress → Waiting on others → Stay aware → Pending → Done)
+3. **Due Date** (earliest due dates first, todos without due dates last)
+
 **Example:**
 ```json
 {
@@ -90,12 +97,15 @@ Create a new to-do item.
 **Parameters:**
 - `name` (required): Todo name
 - `priority` (required): Priority level
+- `status` (optional): Initial status (defaults to "In progress")
+- `due_date` (optional): Due date for the todo
 
 **Example:**
 ```json
 {
   "name": "Complete project",
-  "priority": "high"
+  "priority": "high",
+  "due_date": "2024-01-20T17:00:00.000Z"
 }
 ```
 
@@ -120,13 +130,16 @@ Update a to-do item's properties.
 - `name` (optional): New name
 - `priority` (optional): New priority
 - `status` (optional): New status
+- `notes` (optional): Notes to append (append-only)
+- `due_date` (optional): New due date
 
 **Example:**
 ```json
 {
   "id": 1,
   "status": "in progress",
-  "priority": "urgent"
+  "priority": "urgent",
+  "due_date": "2024-01-25T17:00:00.000Z"
 }
 ```
 
@@ -188,13 +201,14 @@ The database schema is managed by Prisma. The schema is defined in `prisma/schem
 
 ```prisma
 model Todo {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(255)
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
   priority    Priority
-  status      Status   @default(PENDING)
-  notes       String?  @db.Text
-  created_at  DateTime @default(now())
-  updated_at  DateTime @default(now()) @updatedAt
+  status      Status    @default(PENDING)
+  notes       String?   @db.Text
+  due_date    DateTime?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @default(now()) @updatedAt
 
   @@map("todos")
 }

@@ -44,11 +44,12 @@ export class DatabaseService {
       priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
       status: this.mapPrismaStatusToTodoStatus(todo.status),
       notes: todo.notes,
+      due_date: todo.due_date,
       created_at: todo.created_at,
       updated_at: todo.updated_at
     }));
 
-    // Sort by priority first (Urgent -> High -> Medium -> Low), then by status
+    // Sort by priority first, then by status, then by due date (earliest first)
     return mappedTodos.sort((a, b) => {
       // Priority sorting: Urgent first, then High, Medium, Low
       const priorityOrder = {
@@ -72,11 +73,26 @@ export class DatabaseService {
         [TodoStatus.DONE]: 4
       };
       
-      return statusOrder[a.status] - statusOrder[b.status];
+      const statusDiff = statusOrder[a.status] - statusOrder[b.status];
+      if (statusDiff !== 0) {
+        return statusDiff;
+      }
+      
+      // Due date sorting: earliest due dates first, null due dates last
+      if (a.due_date && b.due_date) {
+        return a.due_date.getTime() - b.due_date.getTime();
+      } else if (a.due_date && !b.due_date) {
+        return -1; // a has due date, b doesn't - a comes first
+      } else if (!a.due_date && b.due_date) {
+        return 1; // b has due date, a doesn't - b comes first
+      }
+      
+      // Both have no due date - maintain current order
+      return 0;
     });
   }
 
-  async createTodo(data: { name: string; priority: TodoPriority; status?: TodoStatus }): Promise<Todo> {
+  async createTodo(data: { name: string; priority: TodoPriority; status?: TodoStatus; due_date?: Date }): Promise<Todo> {
     // If status is undefined, set it to IN_PROGRESS
     const status = data.status ?? TodoStatus.IN_PROGRESS;
 
@@ -84,7 +100,8 @@ export class DatabaseService {
       data: {
         name: data.name,
         priority: this.mapTodoPriorityToPrismaPriority(data.priority),
-        status: this.mapTodoStatusToPrismaStatus(status)
+        status: this.mapTodoStatusToPrismaStatus(status),
+        due_date: data.due_date
       }
     });
 
@@ -94,12 +111,13 @@ export class DatabaseService {
       priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
       status: this.mapPrismaStatusToTodoStatus(todo.status),
       notes: todo.notes,
+      due_date: todo.due_date,
       created_at: todo.created_at,
       updated_at: todo.updated_at
     };
   }
 
-  async updateTodo(id: number, data: Partial<{ name: string; priority: TodoPriority; status: TodoStatus; notes: string }>): Promise<Todo | null> {
+  async updateTodo(id: number, data: Partial<{ name: string; priority: TodoPriority; status: TodoStatus; notes: string; due_date: Date }>): Promise<Todo | null> {
     const updateData: Record<string, unknown> = {};
 
     if (data.name !== undefined) {
@@ -112,6 +130,10 @@ export class DatabaseService {
 
     if (data.status !== undefined) {
       updateData.status = this.mapTodoStatusToPrismaStatus(data.status);
+    }
+
+    if (data.due_date !== undefined) {
+      updateData.due_date = data.due_date;
     }
 
     // Handle notes appending
@@ -154,6 +176,7 @@ export class DatabaseService {
         priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
         status: this.mapPrismaStatusToTodoStatus(todo.status),
         notes: todo.notes,
+        due_date: todo.due_date,
         created_at: todo.created_at,
         updated_at: todo.updated_at
       };
@@ -190,6 +213,7 @@ export class DatabaseService {
         priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
         status: this.mapPrismaStatusToTodoStatus(todo.status),
         notes: todo.notes,
+        due_date: todo.due_date,
         created_at: todo.created_at,
         updated_at: todo.updated_at
       };
@@ -230,6 +254,7 @@ export class DatabaseService {
         priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
         status: this.mapPrismaStatusToTodoStatus(todo.status),
         notes: todo.notes,
+        due_date: todo.due_date,
         created_at: todo.created_at,
         updated_at: todo.updated_at
       };
@@ -276,9 +301,49 @@ export class DatabaseService {
       priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
       status: this.mapPrismaStatusToTodoStatus(todo.status),
       notes: todo.notes,
+      due_date: todo.due_date,
       created_at: todo.created_at,
       updated_at: todo.updated_at
-    }));
+    })).sort((a, b) => {
+      // Priority sorting: Urgent first, then High, Medium, Low
+      const priorityOrder = {
+        [TodoPriority.URGENT]: 0,
+        [TodoPriority.HIGH]: 1,
+        [TodoPriority.MEDIUM]: 2,
+        [TodoPriority.LOW]: 3
+      };
+      
+      const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
+      if (priorityDiff !== 0) {
+        return priorityDiff;
+      }
+      
+      // Status sorting: In progress first, then Waiting on others, then Stay aware, then Pending
+      const statusOrder = {
+        [TodoStatus.IN_PROGRESS]: 0,
+        [TodoStatus.WAITING_ON_OTHERS]: 1,
+        [TodoStatus.STAY_AWARE]: 2,
+        [TodoStatus.PENDING]: 3,
+        [TodoStatus.DONE]: 4
+      };
+      
+      const statusDiff = statusOrder[a.status] - statusOrder[b.status];
+      if (statusDiff !== 0) {
+        return statusDiff;
+      }
+      
+      // Due date sorting: earliest due dates first, null due dates last
+      if (a.due_date && b.due_date) {
+        return a.due_date.getTime() - b.due_date.getTime();
+      } else if (a.due_date && !b.due_date) {
+        return -1; // a has due date, b doesn't - a comes first
+      } else if (!a.due_date && b.due_date) {
+        return 1; // b has due date, a doesn't - b comes first
+      }
+      
+      // Both have no due date - maintain current order
+      return 0;
+    });
   }
 
   async close(): Promise<void> {

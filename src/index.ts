@@ -57,8 +57,8 @@ server.registerTool(
     inputSchema: CreateTodoSchema.shape,
   },
   async (args) => {
-    const { name: todoName, priority, status } = args;
-    const todo = await db.createTodo({ name: todoName, priority, status });
+    const { name: todoName, priority, status, due_date } = args;
+    const todo = await db.createTodo({ name: todoName, priority, status, due_date });
     
     return {
       content: [
@@ -108,7 +108,7 @@ server.registerTool(
 server.registerTool(
   "update-todo",
   {
-    description: "Update a to-do item's properties (name, priority, status, notes). Notes are optional and will be appended to the existing notes.",
+    description: "Update a to-do item's properties (name, priority, status, notes, due_date). Notes are optional and will be appended to the existing notes.",
     inputSchema: UpdateTodoSchema.shape,
   },
   async (args) => {

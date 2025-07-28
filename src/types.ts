@@ -21,6 +21,7 @@ export const TodoSchema = z.object({
   priority: z.nativeEnum(TodoPriority),
   status: z.nativeEnum(TodoStatus),
   notes: z.string().nullable(),
+  due_date: z.date().nullable(),
   created_at: z.date(),
   updated_at: z.date()
 });
@@ -31,6 +32,7 @@ export const CreateTodoSchema = z.object({
   name: z.string().min(1, "Name is required"),
   priority: z.nativeEnum(TodoPriority),
   status: z.nativeEnum(TodoStatus).optional(),
+  due_date: z.date().optional(),
 });
 
 export const UpdateTodoSchema = z.object({
@@ -39,6 +41,7 @@ export const UpdateTodoSchema = z.object({
   priority: z.nativeEnum(TodoPriority).optional(),
   status: z.nativeEnum(TodoStatus).optional(),
   notes: z.string().optional(),
+  due_date: z.date().optional(),
 });
 
 export const GetTodosSchema = z.object({

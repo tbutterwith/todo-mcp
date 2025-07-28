@@ -22,7 +22,32 @@ This document shows how to use the Todo MCP server tools.
   "content": [
     {
       "type": "text",
-      "text": "Created to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"Pending\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:30:00.000Z\"\n}"
+      "text": "Created to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"Pending\",\n  \"due_date\": null,\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:30:00.000Z\"\n}"
+    }
+  ]
+}
+```
+
+### 1a. Create a Todo with Due Date
+
+```json
+{
+  "name": "create-todo",
+  "arguments": {
+    "name": "Submit Project Proposal",
+    "priority": "Urgent",
+    "due_date": "2024-01-20T17:00:00.000Z"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Created to-do: {\n  \"id\": 2,\n  \"name\": \"Submit Project Proposal\",\n  \"priority\": \"Urgent\",\n  \"status\": \"In progress\",\n  \"due_date\": \"2024-01-20T17:00:00.000Z\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:30:00.000Z\"\n}"
     }
   ]
 }
@@ -43,7 +68,7 @@ This document shows how to use the Todo MCP server tools.
   "content": [
     {
       "type": "text",
-      "text": "[\n  {\n    \"id\": 1,\n    \"name\": \"Build MCP Server\",\n    \"priority\": \"High\",\n    \"status\": \"Pending\",\n    \"created_at\": \"2024-01-15T10:30:00.000Z\",\n    \"updated_at\": \"2024-01-15T10:30:00.000Z\"\n  }\n]"
+      "text": "[\n  {\n    \"id\": 1,\n    \"name\": \"Build MCP Server\",\n    \"priority\": \"High\",\n    \"status\": \"Pending\",\n    \"due_date\": null,\n    \"created_at\": \"2024-01-15T10:30:00.000Z\",\n    \"updated_at\": \"2024-01-15T10:30:00.000Z\"\n  }\n]"
     }
   ]
 }
@@ -101,7 +126,31 @@ This document shows how to use the Todo MCP server tools.
   "content": [
     {
       "type": "text",
-      "text": "Updated to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"In progress\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:35:00.000Z\"\n}"
+      "text": "Updated to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"In progress\",\n  \"due_date\": null,\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:35:00.000Z\"\n}"
+    }
+  ]
+}
+```
+
+### 6a. Update a Todo's Due Date
+
+```json
+{
+  "name": "update-todo",
+  "arguments": {
+    "id": 1,
+    "due_date": "2024-01-25T17:00:00.000Z"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Updated to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"In progress\",\n  \"due_date\": \"2024-01-25T17:00:00.000Z\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T10:40:00.000Z\"\n}"
     }
   ]
 }
@@ -125,7 +174,7 @@ This document shows how to use the Todo MCP server tools.
   "content": [
     {
       "type": "text",
-      "text": "Appended notes to to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"In progress\",\n  \"notes\": \"Started implementing the MCP server with PostgreSQL backend. Need to add authentication next.\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n}"
+      "text": "Appended notes to to-do: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"In progress\",\n  \"notes\": \"Started implementing the MCP server with PostgreSQL backend. Need to add authentication next.\",\n  \"due_date\": null,\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n}"
     }
   ]
 }
@@ -148,7 +197,7 @@ This document shows how to use the Todo MCP server tools.
   "content": [
     {
       "type": "text",
-      "text": "Marked to-do as done: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"Done\",\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n}"
+      "text": "Marked to-do as done: {\n  \"id\": 1,\n  \"name\": \"Build MCP Server\",\n  \"priority\": \"High\",\n  \"status\": \"Done\",\n  \"due_date\": null,\n  \"created_at\": \"2024-01-15T10:30:00.000Z\",\n  \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n}"
     }
   ]
 }
