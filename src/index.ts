@@ -10,6 +10,7 @@ import {
   MarkTodoDoneSchema,
   AppendTodoNotesSchema,
   TodoReportSchema,
+  GetTodoNotesSchema,
   TodoStatus
 } from "./types.js";
 
@@ -27,7 +28,7 @@ const server = new McpServer({
 server.registerTool(
   "get-todos",
   {
-    description: "Retrieve a list of to-do items. You can optionally filter the results by status (e.g., Pending, In progress, Done) and/or priority (Low, Medium, High, Urgent). Returns all matching to-dos.",
+    description: "Retrieve a list of to-do items. You can optionally filter the results by status (e.g., Pending, In progress, Done) and/or priority (Low, Medium, High, Urgent). Returns all matching to-dos without notes. Use get-todo-notes to retrieve notes for a specific todo.",
     inputSchema: GetTodosSchema.shape,
   },
   async (args) => {
@@ -190,9 +191,41 @@ server.registerTool(
 );
 
 server.registerTool(
+  "get-todo-notes",
+  {
+    description: "Retrieve notes for a specific to-do item by its ID",
+    inputSchema: GetTodoNotesSchema.shape,
+  },
+  async (args) => {
+    const { id } = args;
+    const todoNotes = await db.getTodoNotes(id);
+    
+    if (!todoNotes) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: `To-do with ID ${id} not found`
+          }
+        ]
+      };
+    }
+    
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(todoNotes, null, 2)
+        }
+      ]
+    };
+  }
+);
+
+server.registerTool(
   "generate-todo-report",
   {
-    description: "Generate a report of todos that have been updated or completed in the last N days. The timeframe is configurable via the days parameter.",
+    description: "Generate a report of todos that have been updated or completed in the last N days. The timeframe is configurable via the days parameter. Returns todos without notes. Use get-todo-notes to retrieve notes for specific todos.",
     inputSchema: TodoReportSchema.shape,
   },
   async (args) => {

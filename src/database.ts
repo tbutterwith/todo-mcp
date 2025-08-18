@@ -14,7 +14,7 @@ export class DatabaseService {
     // No explicit initialization needed
   }
 
-  async getTodos(status?: TodoStatus, exludedStatus?: TodoStatus, priority?: TodoPriority | TodoPriority[]): Promise<Todo[]> {
+  async getTodos(status?: TodoStatus, exludedStatus?: TodoStatus, priority?: TodoPriority | TodoPriority[]): Promise<Omit<Todo, 'notes'>[]> {
     const where: Record<string, unknown> = {};
 
     if (status) {
@@ -43,7 +43,6 @@ export class DatabaseService {
       name: todo.name,
       priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
       status: this.mapPrismaStatusToTodoStatus(todo.status),
-      notes: todo.notes,
       due_date: todo.due_date,
       created_at: todo.created_at,
       updated_at: todo.updated_at
@@ -264,7 +263,23 @@ export class DatabaseService {
     }
   }
 
-  async getTodosUpdatedInLastDays(days: number): Promise<Todo[]> {
+  async getTodoNotes(id: number): Promise<{ id: number; notes: string | null } | null> {
+    try {
+      const todo = await this.prisma.todo.findUnique({
+        where: { id },
+        select: {
+          id: true,
+          notes: true
+        }
+      });
+
+      return todo;
+    } catch {
+      return null;
+    }
+  }
+
+  async getTodosUpdatedInLastDays(days: number): Promise<Omit<Todo, 'notes'>[]> {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
@@ -300,7 +315,6 @@ export class DatabaseService {
       name: todo.name,
       priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
       status: this.mapPrismaStatusToTodoStatus(todo.status),
-      notes: todo.notes,
       due_date: todo.due_date,
       created_at: todo.created_at,
       updated_at: todo.updated_at

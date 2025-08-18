@@ -33,7 +33,7 @@
     "@typescript-eslint/parser": "^8.36.0",
     "eslint": "^9.30.1",
     "eslint-plugin-import": "^2.32.0",
-    "prisma": "^6.12.0",
+    "prisma": "^6.13.0",
     "typescript": "^5.8.3"
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"

@@ -36,7 +36,7 @@ This document shows how to use the Todo MCP server tools.
   "arguments": {
     "name": "Submit Project Proposal",
     "priority": "Urgent",
-    "due_date": "2024-01-20T17:00:00.000Z"
+    "due_date": "2024-01-20"
   }
 }
 ```
@@ -139,7 +139,7 @@ This document shows how to use the Todo MCP server tools.
   "name": "update-todo",
   "arguments": {
     "id": 1,
-    "due_date": "2024-01-25T17:00:00.000Z"
+    "due_date": "2024-01-25"
   }
 }
 ```
@@ -217,6 +217,38 @@ This document shows how to use the Todo MCP server tools.
 - `Medium`: Medium priority task
 - `High`: High priority task
 - `Urgent`: Urgent task that needs immediate attention
+
+## Due Date Formats
+
+The `due_date` parameter accepts various date formats as strings:
+
+### ISO 8601 Format
+- `"2024-01-15"`
+- `"2024-01-15T10:30:00Z"`
+
+### US Format
+- `"01/15/2024"`
+- `"1/15/24"`
+
+### UK Format
+- `"15/01/2024"`
+- `"15/1/24"`
+
+### Natural Language
+- `"tomorrow"`
+- `"next week"`
+- `"next month"`
+
+### Relative Dates
+- `"today"`
+- `"yesterday"`
+- `"in 3 days"`
+- `"in 2 weeks"`
+- `"in 1 month"`
+
+### Month Name Formats
+- `"Jan 15, 2024"`
+- `"15 Jan 2024"`
 
 ### 9. Generate Todo Activity Report
 
