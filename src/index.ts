@@ -11,6 +11,7 @@ import {
   AppendTodoNotesSchema,
   TodoReportSchema,
   GetTodoNotesSchema,
+  GetTodosWithDueDatesSchema,
   TodoStatus
 } from "./types.js";
 
@@ -138,25 +139,6 @@ server.registerTool(
   }
 );
 
-server.registerTool(
-  "get-todo-statuses",
-  {
-    description: "Get all available statuses for to-do items",
-    inputSchema: {},
-  },
-  async () => {
-    const statuses = Object.values(TodoStatus);
-    
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(statuses, null, 2)
-        }
-      ]
-    };
-  }
-);
 
 server.registerTool(
   "append-todo-notes",
@@ -245,6 +227,41 @@ server.registerTool(
         {
           type: "text",
           text: `Todo Activity Report (Last ${days} days):\n\n${JSON.stringify(report, null, 2)}`
+        }
+      ]
+    };
+  }
+);
+
+server.registerTool(
+  "get-todos-with-due-dates",
+  {
+    description: "Get todos that are due today, tomorrow, and all future todos with due dates set. Returns todos organized by due date categories without notes. Use get-todo-notes to retrieve notes for specific todos.",
+    inputSchema: GetTodosWithDueDatesSchema.shape,
+  },
+  async () => {
+    const todosByDate = await db.getTodosWithDueDates();
+    
+    const result = {
+      today: {
+        count: todosByDate.today.length,
+        todos: todosByDate.today.map(({ created_at: _created_at, updated_at: _updated_at, ...rest }) => rest)
+      },
+      tomorrow: {
+        count: todosByDate.tomorrow.length,
+        todos: todosByDate.tomorrow.map(({ created_at: _created_at, updated_at: _updated_at, ...rest }) => rest)
+      },
+      future: {
+        count: todosByDate.future.length,
+        todos: todosByDate.future.map(({ created_at: _created_at, updated_at: _updated_at, ...rest }) => rest)
+      }
+    };
+    
+    return {
+      content: [
+        {
+          type: "text",
+          text: `Todos with Due Dates:\n\n${JSON.stringify(result, null, 2)}`
         }
       ]
     };

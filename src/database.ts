@@ -360,6 +360,115 @@ export class DatabaseService {
     });
   }
 
+  async getTodosWithDueDates(): Promise<{
+    today: Omit<Todo, 'notes'>[];
+    tomorrow: Omit<Todo, 'notes'>[];
+    future: Omit<Todo, 'notes'>[];
+  }> {
+    // Get today's date at start of day
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Get tomorrow's date at start of day
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    // Get day after tomorrow at start of day
+    const dayAfterTomorrow = new Date(today);
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+
+    const todos = await this.prisma.todo.findMany({
+      where: {
+        due_date: {
+          not: null
+        }
+      },
+      orderBy: {
+        due_date: 'asc'
+      }
+    });
+
+    const mappedTodos = todos.map(todo => ({
+      id: todo.id,
+      name: todo.name,
+      priority: this.mapPrismaPriorityToTodoPriority(todo.priority),
+      status: this.mapPrismaStatusToTodoStatus(todo.status),
+      due_date: todo.due_date,
+      created_at: todo.created_at,
+      updated_at: todo.updated_at
+    }));
+
+    // Filter and categorize todos
+    const todayTodos = mappedTodos.filter(todo => {
+      if (!todo.due_date) return false;
+      const dueDate = new Date(todo.due_date);
+      dueDate.setHours(0, 0, 0, 0);
+
+      if (dueDate.getTime() === today.getTime()) return true;
+
+      return dueDate.getTime() <= today.getTime() && todo.status !== TodoStatus.DONE;
+    });
+
+    const tomorrowTodos = mappedTodos.filter(todo => {
+      if (!todo.due_date) return false;
+      const dueDate = new Date(todo.due_date);
+      dueDate.setHours(0, 0, 0, 0);
+      return dueDate.getTime() === tomorrow.getTime();
+    });
+
+    const futureTodos = mappedTodos.filter(todo => {
+      if (!todo.due_date) return false;
+      const dueDate = new Date(todo.due_date);
+      dueDate.setHours(0, 0, 0, 0);
+      return dueDate.getTime() >= dayAfterTomorrow.getTime();
+    });
+
+    // Sort each category by priority and status
+    const sortTodos = (todos: Omit<Todo, 'notes'>[]) => {
+      return todos.sort((a, b) => {
+        // Priority sorting: Urgent first, then High, Medium, Low
+        const priorityOrder = {
+          [TodoPriority.URGENT]: 0,
+          [TodoPriority.HIGH]: 1,
+          [TodoPriority.MEDIUM]: 2,
+          [TodoPriority.LOW]: 3
+        };
+        
+        const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
+        if (priorityDiff !== 0) {
+          return priorityDiff;
+        }
+        
+        // Status sorting: In progress first, then Waiting on others, then Stay aware, then Pending
+        const statusOrder = {
+          [TodoStatus.IN_PROGRESS]: 0,
+          [TodoStatus.WAITING_ON_OTHERS]: 1,
+          [TodoStatus.STAY_AWARE]: 2,
+          [TodoStatus.PENDING]: 3,
+          [TodoStatus.DONE]: 4
+        };
+        
+        const statusDiff = statusOrder[a.status] - statusOrder[b.status];
+        if (statusDiff !== 0) {
+          return statusDiff;
+        }
+        
+        // Due date sorting: earliest due dates first
+        if (a.due_date && b.due_date) {
+          return a.due_date.getTime() - b.due_date.getTime();
+        }
+        
+        return 0;
+      });
+    };
+
+    return {
+      today: sortTodos(todayTodos),
+      tomorrow: sortTodos(tomorrowTodos),
+      future: sortTodos(futureTodos)
+    };
+  }
+
   async close(): Promise<void> {
     await this.prisma.$disconnect();
   }

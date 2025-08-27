@@ -80,4 +80,6 @@ export const TodoReportSchema = z.object({
 
 export const GetTodoNotesSchema = z.object({
   id: z.number()
-}); 
+});
+
+export const GetTodosWithDueDatesSchema = z.object({}); 
